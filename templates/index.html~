@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
+    <title>Weather, News, and Quotes</title>
     <!-- Подключаем Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6 text-center">
-                <h1 class="display-4 mb-4">Прогноз погоды в любой точке мира</h1>
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-4">Прогноз погоды и цитаты</h1>
                 <form method="post" class="mb-4">
                     <div class="input-group">
                         <input type="text" name="city" class="form-control" placeholder="Введите название города" required>
-                        <button type="submit" name="action" value="weather" class="btn btn-primary">Узнать погоду</button>
+                        <button type="submit" class="btn btn-primary">Узнать погоду</button>
                     </div>
                 </form>
 
+                <!-- Блок с погодой -->
                 {% if weather %}
                 <div class="card mb-4">
                     <div class="card-body">
@@ -29,30 +30,15 @@
                 </div>
                 {% endif %}
 
-                <!-- Кнопка "Получить новости" (всегда на экране) -->
-                <form method="post" class="mb-4">
-                    <button type="submit" name="action" value="news" class="btn btn-success">Получить новости</button>
-                </form>
-
-                <!-- Блок с новостями (отображается только после нажатия кнопки) -->
-                {% if news %}
-                <div class="card">
+                <!-- Блок с цитатой -->
+                {% if quote %}
+                <div class="card mb-4">
                     <div class="card-body">
-                        <h2 class="card-title">Новости</h2>
-                        <ul class="list-unstyled">
-                            {% for article in news %}
-                            <li class="mb-3">
-                                <a href="{{ article['url'] }}" target="_blank" class="text-decoration-none">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ article['title'] }}</h5>
-                                            <p class="card-text">{{ article['description'] }}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
+                        <h2 class="card-title">Цитата дня</h2>
+                        <blockquote class="blockquote">
+                            <p class="mb-0">{{ quote['quote'] }}</p>
+                            <footer class="blockquote-footer">{{ quote['author'] }}</footer>
+                        </blockquote>
                     </div>
                 </div>
                 {% endif %}
