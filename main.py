@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
 import requests
 
+
 app = Flask(__name__)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -9,12 +11,15 @@ def index():
     news = None
     quote = None
 
+
+
     if request.method == 'POST':
         city = request.form.get('city')
         if city:
             weather = get_weather(city)
-        news = get_news()
+        #news = get_news()
         quote = get_quote()
+
 
     return render_template('index.html', weather=weather, news=news, quote=quote)
 
@@ -24,11 +29,11 @@ def get_weather(city):
     response = requests.get(url)
     return response.json()
 
-def get_news():
-    api_key = "cc1162a387ff4e4fb895df4ccd36e91b"
-    url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
-    response = requests.get(url)
-    return response.json().get("articles", [])
+# def get_news():
+#     api_key = "cc1162a387ff4e4fb895df4ccd36e91b"
+#     url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
+#     response = requests.get(url)
+#     return response.json().get("articles", [])
 
 def get_quote():
     api_url = 'https://api.api-ninjas.com/v1/quotes'
@@ -39,6 +44,8 @@ def get_quote():
         if data:
             return data[0]  # Возвращаем первую цитату
     return None
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
